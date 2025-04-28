@@ -25,7 +25,7 @@ namespace AcunMedyaAkademiWebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var categories = _context.Categories.Find(id);
-            if(categories == null)
+            if (categories == null)
             {
                 return NotFound();
             }
@@ -43,6 +43,27 @@ namespace AcunMedyaAkademiWebAPI.Controllers
             _context.Categories.Add(category);
             _context.SaveChanges();
             return Created("", category);
+        }
+        [HttpPut]
+        public IActionResult Update(CategoriesUpdateDTO categoryDto)
+        {
+            var category = _context.Categories.Find(categoryDto.CategoryId);
+            if (category == null)
+                return NotFound();
+            category.CategoryName = categoryDto.CategoryName;
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+            return StatusCode(204, new {message="Kategori Güncellendi!"});
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category == null)
+                return NotFound();
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
