@@ -19,5 +19,15 @@ namespace AcunMedyaAkademiWebAPI.Controllers
             var categories = _context.Categories.ToList();
             return Ok(categories);
         }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var categories = _context.Categories.Find(id);
+            if(categories == null)
+            {
+                return NotFound();
+            }
+            return Ok(categories);
+        }
     }
 }
