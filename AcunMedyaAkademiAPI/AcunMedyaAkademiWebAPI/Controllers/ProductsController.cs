@@ -1,4 +1,6 @@
 ﻿using AcunMedyaAkademiWebAPI.Context;
+using AcunMedyaAkademiWebAPI.DTOs.ProductDTO;
+using AcunMedyaAkademiWebAPI.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,43 @@ namespace AcunMedyaAkademiWebAPI.Controllers
                 return NotFound();
             }
             return Ok(products);
+        }
+        [HttpPost]
+        public IActionResult Create(ProductCreateDTO productDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var product = new Product
+            {
+                ProductName = productDto.ProductName,
+                Price = productDto.Price,
+                ImageUrl = productDto.ImageUrl,
+                CategoryId = productDto.CategoryId,
+            };
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return Created("", product);
+        }
+        [HttpPut]
+        public IActionResult Update(ProductUpdateDTO productDto)
+        {
+            var product = _context.Products.Find(productDto.ProductId);
+            if (product == null)
+                return NotFound();
+            product.ProductName = productDto.ProductName;
+            _context.Products.Update(product);
+            _context.SaveChanges();
+            return StatusCode(204, new { message = "Ürün Güncellendi!" });
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+                return NotFound();
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
