@@ -1,0 +1,30 @@
+﻿@model List<AcunMedyaAkademiWebUI.DTOs.ResultCategoryDTO>
+@{
+    Layout = null;
+}
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"   />
+
+<div class="Container">
+    <br /><br />
+
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th>Kategori</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
+                <td><a href="/Category/UpdateCategory/@item.CategoryId" class="btn btn-warning">Güncelle</a></td>
+                <td><a href="/Category/DeleteCategory/@item.CategoryId" class="btn btn-danger">Sil</a></td>
+            </tr>
+            }
+
+    </table>
+
+    <a href="/Category/CreateCategory/" class="btn btn-info">Ekle</a>
+</div>
