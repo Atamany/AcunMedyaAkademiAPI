@@ -26,5 +26,23 @@ namespace AcunMedyaAkademiWebUI.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CreateCategoryDTO model)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://localhost:7163/api/Categories", content);
+            if(response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
