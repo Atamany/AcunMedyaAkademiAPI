@@ -53,5 +53,18 @@ namespace AcunMedyaAkademiWebUI.Controllers
             var values = JsonConvert.DeserializeObject<UpdateCategoryDTO>(jsonData);
             return View(values);
         }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategory(UpdateCategoryDTO model)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PutAsync("https://localhost:7163/api/Categories/", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
     }
 }
