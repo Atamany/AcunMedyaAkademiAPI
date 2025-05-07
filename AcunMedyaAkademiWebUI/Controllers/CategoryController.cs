@@ -66,5 +66,15 @@ namespace AcunMedyaAkademiWebUI.Controllers
             }
             return View(model);
         }
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.DeleteAsync("https://localhost:7163/api/Categories/" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
