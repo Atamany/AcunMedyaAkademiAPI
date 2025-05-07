@@ -1,0 +1,36 @@
+﻿@model List<AcunMedyaAkademiWebUI.DTOs.ProductWithCategoryDTO>
+@{
+    Layout = null;
+}
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"   />
+
+<div class="Container">
+    <br /><br />
+
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th>Ürün</th>
+            <th>Fiyat</th>
+            <th>Kategori</th>
+            <th>Resim</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+                <td>@item.CategoryName</td>
+                <td><img src="@item.ImageUrl" style="height:100px;width:100px;" /></td>
+                <td><a href="/Product/UpdateProduct/@item.ProductId" class="btn btn-warning">Güncelle</a></td>
+                <td><a href="/Product/DeleteProduct/@item.ProductId" class="btn btn-danger">Sil</a></td>
+            </tr>
+        }
+
+    </table>
+
+    <a href="/Product/CreateProduct/" class="btn btn-info">Ekle</a>
+</div>

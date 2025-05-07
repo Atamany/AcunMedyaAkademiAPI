@@ -26,6 +26,18 @@ namespace AcunMedyaAkademiWebUI.Controllers
             }
             return View();
         }
+        public async Task<IActionResult> GetAllWithCategory()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7163/api/Products/GetAllWithCategory");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonData = await response.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ProductWithCategoryDTO>>(jsonData);
+                return View(values);
+            }
+            return View();
+        }
         [HttpGet]
         public IActionResult CreateProduct()
         {
