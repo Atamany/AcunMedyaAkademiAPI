@@ -59,7 +59,7 @@ namespace AcunMedyaAkademiWebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(model);
             var content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("https://localhost:7163/api/Products/", content);
+            var response = await client.PutAsync("https://localhost:7163/api/Products", content);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

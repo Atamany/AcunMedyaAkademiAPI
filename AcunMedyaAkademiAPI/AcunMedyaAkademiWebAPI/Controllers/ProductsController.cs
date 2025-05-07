@@ -55,6 +55,9 @@ namespace AcunMedyaAkademiWebAPI.Controllers
             if (product == null)
                 return NotFound();
             product.ProductName = productDto.ProductName;
+            product.Price = productDto.Price;
+            product.ImageUrl = productDto.ImageUrl;
+            product.CategoryId = productDto.CategoryId;
             _context.Products.Update(product);
             _context.SaveChanges();
             return StatusCode(204, new { message = "Ürün Güncellendi!" });
